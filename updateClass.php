@@ -2,33 +2,37 @@
 	$json = file_get_contents('php://input');
 	$obj = json_decode($json,true);
 
-	$ModuleID = $obj['ModuleID'];
-	$Room_ID = $obj['Room_ID'];
-	$LecturerID = $obj['LecturerID'];
-	$DateStr = $obj['ClassDate'];
-	$Start_Str = $obj['Start_Time'];
-	$End_Str = $obj['End_Time'];
-	$ClassID = $obj['ClassID'];
+	$ModuleID = $obj['ModuleID']; //int
+	$Room_ID = $obj['Room_ID']; //string
+	$LecturerID = $obj['LecturerID']; //int
+	$DateStr = $obj['ClassDate']; //date
+	$Start_Str = $obj['Start_Time']; //time
+	$End_Str = $obj['End_Time']; //time
+	$ClassID = $obj['ClassID']; //int
 
 	$startSplit = explode(':',$Start_Str);
 	$endSplit = explode(':',$End_Str);
-	
-	var_dump($startSplit);
-	var_dump($endSplit);
+	$dateSplit = explode('-',$DateStr);
 
-	$ClassDate = strtotime($DateStr);
-	$Start_Time = mktime($startSplit[0],$startSplit[1],0,0,0,0);
-	$End_Time = mktime($endSplit[0],$endSplit[1],0,0,0,0);
+	$ClassDate = $dateSplit[2] . $dateSplit[1] . $dateSplit[0];
+	$Start_Time = $startSplit[0] . $startSplit[1] . "00";
+	$End_Time = $endSplit[0] . $endSplit[1] . "00";
 
 	$db = mysql_connect("philippratt.co.uk:3306","agile","agile");
 	mysql_select_db('agile');
 
-	echo mysql_query('CALL updateClass('.$ModuleID.','.$Room_ID.','.$LecturerID.','.$ClassDate.','.$Start_Time.','.$End_Time.','.$ClassID.')',$db);
+	//mysql_query('CALL updateClass('.$ModuleID.','.$Room_ID.','.$LecturerID.','.$ClassDate.','.$Start_Time.','.$End_Time.','.$ClassID.')',$db);
+
+	$query = 'UPDATE class SET moduleID = ' .$ModuleID. ', room_ID = ' .$Room_ID. ', lecturerID = ' .$LecturerID. ', ClassDate = ' .$ClassDate. ', Start_Time = ' .$Start_Time. ', End_Time = ' .$End_Time. ' WHERE classID = ' .$ClassID;
+
+	//
+
+	echo($query);
+	echo("<br>");
+
+	mysql_query($query,$db);
 
 	mysql_close($db);
-
-
-	echo "done";
 ?>
 
 <title>updateClass.php</title>
