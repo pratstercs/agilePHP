@@ -20,7 +20,7 @@ class Login {
 			array_push($result,
 			array('UsersID'=>$row[0],
 			'UsersName'=>$row[1],
-			'UserPassword'=>$row[2],
+			//'UserPassword'=>$row[2],
 			'Staff'=>$row[3],
 			'Student'=>$row[4]
 			));
