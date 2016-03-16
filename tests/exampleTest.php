@@ -1,8 +1,8 @@
 <?php
-	class exampleTest extends PHPUnit_Framework_TestCase
+	class ExampleTest extends PHPUnit_Framework_TestCase
 	{
-		public function true() {
-			return true;
+		public function testTrue() {
+			$this->assertTrue(true);
 		}
 	}
 ?>
