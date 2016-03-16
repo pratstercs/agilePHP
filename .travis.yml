@@ -3,4 +3,4 @@ php:
   - '5.6'
 
 script:
-  - phpunit tests
+  - php phpunit.phar tests
