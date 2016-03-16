@@ -1,22 +1,33 @@
 <?php
-	$json = file_get_contents('php://input');
-	$obj = json_decode($json,true);
+	class SelectStudentID {
+		public function __construct() {
 
-	$db = mysql_connect("philippratt.co.uk:3306","agile","agile");
-	mysql_select_db('agile');
+		}
+		public function selectStudentID() {
+			$db = mysql_connect("philippratt.co.uk:3306","agile","agile");
+			mysql_select_db('agile');
 
-	$studQuery = "select StudentID from student";
-	
-	$studResult = mysql_query($studQuery,$db);
+			$studQuery = "select StudentID from student";
+			
+			$studResult = mysql_query($studQuery,$db);
 
-	mysql_close;
-	
-	$result = array();
+			mysql_close();
+			
+			$result = array();
 
-	while($row = mysql_fetch_array($studResult)){
-		array_push($result, $row['StudentID']);
+			while($row = mysql_fetch_array($studResult)){
+				array_push($result, $row['StudentID']);
+			}
+			
+			return json_encode($result);
+		}
 	}
-	
-	echo json_encode($result);
+
+$a = new SelectStudentID();
+
+$json = file_get_contents('php://input');
+$obj = json_decode($json,true);
+
+echo $a->selectStudentID();
 
 ?>
