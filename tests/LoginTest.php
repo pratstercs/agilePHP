@@ -25,7 +25,7 @@ require_once "login.php";
 		}
 		
 		public function testStudent() {
-			$this->expectOutputString('{"result":[{"UsersID":"7","UsersName":"HarryStudent","Staff":"0","Student":"1"}]}');
+			$this->expectOutputString('{"result":[{"UsersID":"20","UsersName":"HarryStudent","Staff":"0","Student":"1"}]}');
 			
 			$a = new Login();
 			$a->login("HarryStudent","password");
