@@ -5,16 +5,18 @@
 	$db = mysql_connect("philippratt.co.uk:3306","agile","agile");
 	mysql_select_db('agile');
 
-	$studQuery = "select StudentID from student";
+	$modQuery = "select ModuleName from module";
 	
-	$studResult = mysql_query($studQuery,$db);
+	$modResult = mysql_query($modQuery,$db);
 
 	mysql_close;
 	
 	$result = array();
 
-	while($row = mysql_fetch_array($studResult)){
-		array_push($result, $row['StudentID']);
+	while($row = mysql_fetch_array($modResult)){
+	//	echo $row['ModuleID'];
+	//	echo "testing...";
+		array_push($result, $row['ModuleName']);
 	}
 	
 	echo json_encode($result);
