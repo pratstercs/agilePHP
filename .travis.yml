@@ -1,6 +1,6 @@
 language: php
 php:
-  - '5.6'
+  - hhvm
 
 script:
-  - php phpunit.phar tests
+  - php phpunit.phar ./tests
