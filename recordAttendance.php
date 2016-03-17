@@ -15,19 +15,30 @@
 				$studentID = $row[0];
 			}
 			
-			$query = 'SELECT ClassID FROM class WHERE Room_ID = 
-							( SELECT RoomID FROM room WHERE QRCode = "' . $QRCode . '") 
-							&& Start_Time = \'' . $StartTime . '\';';
+			$query = '	Select 
+							c.ClassID 
+						from 
+							class c inner join room r 	on c.Room_ID=r.RoomID 
+									inner join module m on m.ModuleID=c.ModuleID 
+									inner join enrolement e on m.ModuleID=e.ModuleID 
+						where 
+							e.StudentID = ' . $studentID . '  
+						&& 	r.QRCode = "' . $QRCode . '" && c.ClassDate=CURDATE() && c.Start_Time-1000 < CURTIME() && c.End_Time > curtime();';
+
+			echo $query;
+
+/*
 
 			$res = mysql_query($query,$db);
 			$result = array();
 			while($row = mysql_fetch_array($res))
 			{
+				echo $row[0];
 				$classID = $row[0];
 			}
 			
 			$query = 'INSERT INTO attended (ClassID, StudentID) VALUES ('.$classID.','.$studentID.')';
-			$res = mysql_query($query,$db);
+			$res = mysql_query($query,$db);*/
 			
 			mysql_close($db);
 		}

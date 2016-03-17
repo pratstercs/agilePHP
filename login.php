@@ -32,13 +32,13 @@ class Login {
 	}
 }
 
-$a = new Login();
+$bills = new Login();
 
 $json = file_get_contents('php://input');
 $obj = json_decode($json,true);
 $UsersName = $obj['UsersName'];
 $UserPassword = $obj['UserPassword'];
 
-$a->login($UsersName, $UserPassword);
+$bills->login($UsersName, $UserPassword);
  
 ?>
