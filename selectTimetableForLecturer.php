@@ -9,32 +9,21 @@ class SelectTimetableForLecturer {
 			mysql_select_db('agile');
 
 		$res = mysql_query('SELECT 
-								module.ModuleName, class.Start_Time, class.End_Time, dayofweek(ClassDate)
-							FROM 
-								module
-							INNER JOIN class
-							ON module.ModuleID=class.ModuleID
-							WHERE class.LecturerID = 
-								( 	SELECT
-										lecturer.LecturerID
-									FROM
-										lecturer
-									WHERE
-										lecturer.StaffID = 
-										( 	SELECT 
-												staff.StaffID
-											FROM
-												staff
-											WHERE
-												staff.UserID =
-											(	SELECT
-													user.UserID
-												FROM
-													user
-												WHERE
-													user.UserID=' . $UserID . '&& 
-									class.ClassDate>= DATE_ADD(current_date(), INTERVAL(1-DAYOFWEEK(current_date())) +1 DAY) && 
-													class.ClassDate <= DATE_ADD(current_date(), INTERVAL(7-DAYOFWEEK(current_date()))-1 DAY))) );',$db); 
+				module.ModuleName, class.Start_Time, class.End_Time, dayofweek(ClassDate)
+				FROM 
+				module
+				INNER JOIN class
+				ON module.ModuleID=class.ModuleID
+				inner join lecturer
+				on lecturer.LecturerID = class.LecturerID
+				inner join staff
+				on lecturer.StaffID = staff.StaffID
+				inner join user
+				on user.UserID = staff.UserID
+				WHERE
+					user.UserID= ' . $UserID . ' && 
+					class.ClassDate>= DATE_ADD(current_date(), INTERVAL(1-DAYOFWEEK(current_date())) +1 DAY) && 
+					class.ClassDate <= DATE_ADD(current_date(), INTERVAL(7-DAYOFWEEK(current_date()))-1 DAY);;',$db); 
 		$result = array();
 		 
 		while($row = mysql_fetch_array($res)){

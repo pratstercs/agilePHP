@@ -12,7 +12,7 @@
 					module.ModuleID =lecturer.moduleID inner join staff on
 					lecturer.StaffID=staff.StaffID inner join user on 
 					staff.UserID= user.UserID where module.ModuleYear= '2016' && user.userID =" .$userId. ";";
-			
+
 			$modResult = mysql_query($modQuery,$db);
 
 			mysql_close();
@@ -30,6 +30,7 @@
 $a = new SelectModuleName();
 
 $json = file_get_contents('php://input');
+//$json = file_get_contents("test.json");
 $obj = json_decode($json,true);
 $userId = $obj['UserId'];
 
